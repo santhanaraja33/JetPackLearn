@@ -7,7 +7,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.funfacts.view.screens.LoginScreen
 import com.example.funfacts.view.screens.MainScreen
+import com.example.funfacts.view.screens.OnboardingScreen
+import com.example.funfacts.view.screens.RegisterScreen
 import com.example.funfacts.view.screens.SplashAnimate
 
 
@@ -34,8 +37,28 @@ fun NavHostContainer(
                 SplashAnimate(navController)
             }
 
+            //OnBoardScreen
+            composable("onboard") {
+                OnboardingScreen(navController)
+            }
+
+
+            //Home
             composable("main") {
                 MainScreen(navController)
             }
+
+
+            //Login
+            composable("login") {
+                LoginScreen(navController)
+            }
+
+            //Register
+            composable("register") {
+                RegisterScreen(navController)
+            }
+
+
         })
 }

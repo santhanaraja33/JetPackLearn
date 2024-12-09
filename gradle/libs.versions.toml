@@ -4,6 +4,7 @@ adapterRxjava2 = "2.3.0"
 agp = "8.5.2"
 androidxHiltCompiler = "1.0.0"
 converterGson = "2.9.0"
+coreSplashscreen = "1.0.1"
 googleHiltAndroid = "2.44"
 googleHiltAndroidVersion = "2.51.1"
 googleHiltCompiler = "2.44"
@@ -42,6 +43,7 @@ accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pa
 accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanistNavigationAnimation" }
 adapter-rxjava2 = { module = "com.squareup.retrofit2:adapter-rxjava2", version.ref = "adapterRxjava2" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-hilt-compiler = { module = "androidx.hilt:hilt-compiler", version.ref = "hiltCompilerVersion" }
 androidx-hilt-compiler-v100 = { module = "androidx.hilt:hilt-compiler", version.ref = "androidxHiltCompiler" }
 androidx-hilt-lifecycle-viewmodel = { module = "androidx.hilt:hilt-lifecycle-viewmodel", version.ref = "hiltLifecycleViewmodel" }

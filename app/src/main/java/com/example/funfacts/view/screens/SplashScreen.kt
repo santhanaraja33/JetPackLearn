@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -16,18 +17,24 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.funfacts.R
+import com.example.funfacts.util.OnboardingUtils
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.delay
 
 @Composable
 fun SplashAnimate(navController: NavController) {
+
+    val context = LocalContext.current
+    val onboardingUtils = OnboardingUtils(context)
+
+
     val scale = remember { Animatable(0f) }
     val systemUiController = rememberSystemUiController()
 
@@ -37,11 +44,22 @@ fun SplashAnimate(navController: NavController) {
             OvershootInterpolator(2f).getInterpolation(it)
         }))
         delay(3000L)
-        navController.navigate("main") {
-            popUpTo("splash") {
-                inclusive = true
+
+        if (onboardingUtils.isOnboardingCompleted()) {
+            navController.navigate("login") {
+                popUpTo("splash") {
+                    inclusive = true
+                }
+            }
+        } else {
+
+            navController.navigate("onboard") {
+                popUpTo("splash") {
+                    inclusive = true
+                }
             }
         }
+
         systemUiController.isSystemBarsVisible = true
 
     }
@@ -49,17 +67,18 @@ fun SplashAnimate(navController: NavController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color.DarkGray),
+            .background(color = colorResource(id = R.color.my_purple)),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
         Image(
-            painter = painterResource(id = R.drawable.baseline_android_24),
+            painter = painterResource(id = R.drawable.splash),
             contentDescription = "Splash Image",
             modifier = Modifier
                 .width(500.dp)
                 .height(500.dp)
                 .scale(scale.value)
+                .padding(start = 20.dp)
         )
     }
 

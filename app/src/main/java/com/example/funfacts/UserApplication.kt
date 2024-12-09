@@ -8,5 +8,6 @@ import dagger.hilt.android.HiltAndroidApp
 class UserApplication:Application() {
     override fun onCreate() {
         super.onCreate()
+
     }
 }
