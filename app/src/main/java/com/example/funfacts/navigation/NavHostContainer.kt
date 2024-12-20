@@ -12,6 +12,7 @@ import com.example.funfacts.view.screens.MainScreen
 import com.example.funfacts.view.screens.OnboardingScreen
 import com.example.funfacts.view.screens.RegisterScreen
 import com.example.funfacts.view.screens.SplashAnimate
+import com.example.funfacts.view.screens.VerificationScreen
 
 
 @Composable
@@ -59,6 +60,11 @@ fun NavHostContainer(
                 RegisterScreen(navController)
             }
 
-
+            //Verification Page
+            composable("verification") {
+                VerificationScreen(navController)
+            }
         })
 }
+
+

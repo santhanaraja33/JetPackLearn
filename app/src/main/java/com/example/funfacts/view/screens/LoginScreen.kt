@@ -147,7 +147,7 @@ fun LoginScreen(navHostController: NavHostController) {
                     .align(Alignment.Start)
                     .padding(start = 20.dp)
             ) {
-                CustomCheckBoxWithLabel()
+                CustomCheckBoxWithLabel(navHostController = navHostController)
                 Spacer(modifier = Modifier.height(176.dp))
             }
             NextButton(label = "Next")
@@ -161,12 +161,10 @@ fun LoginScreen(navHostController: NavHostController) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(text = "New Member? ")
-                Text(
-                    text = "Register now",
+                Text(text = "Register now",
                     color = Color(0xFF6C63FF),
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.clickable { navHostController.navigate("register") }
-                )
+                    modifier = Modifier.clickable { navHostController.navigate("register") })
             }
 
         }
@@ -220,26 +218,23 @@ fun CustomCheckBoxWithLabel(
     label: String = "Remember me",
     modifier: Modifier = Modifier,
     initialChecked: Boolean = false,
-    onCheckedChange: (Boolean) -> Unit = {}
+    onCheckedChange: (Boolean) -> Unit = {},
+    navHostController: NavHostController
 ) {
     var checked by remember { mutableStateOf(initialChecked) }
 
     Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier
-            .padding(start = 10.dp)
+        verticalAlignment = Alignment.CenterVertically, modifier = modifier.padding(start = 10.dp)
     ) {
-        Box(
-            modifier = Modifier
-                .size(12.dp)
-                .border(1.dp, Color(0xFFCBCBCB), RoundedCornerShape(3.dp)) // Outline
-                .clip(RoundedCornerShape(4.dp))
-                .clickable {
-                    checked = !checked
-                    onCheckedChange(checked)
-                }
-                .background(if (checked) MaterialTheme.colorScheme.primary else Color.Transparent)
-        ) {
+        Box(modifier = Modifier
+            .size(12.dp)
+            .border(1.dp, Color(0xFFCBCBCB), RoundedCornerShape(3.dp)) // Outline
+            .clip(RoundedCornerShape(4.dp))
+            .clickable {
+                checked = !checked
+                onCheckedChange(checked)
+            }
+            .background(if (checked) MaterialTheme.colorScheme.primary else Color.Transparent)) {
             if (checked) {
                 Icon(
                     painter = painterResource(id = R.drawable.baseline_check_box_24),
@@ -254,20 +249,18 @@ fun CustomCheckBoxWithLabel(
 
         Spacer(modifier = Modifier.width(8.dp)) // Space between checkbox and label
 
-        Text(
-            text = label,
+        Text(text = label,
             color = Color.Black,
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier.clickable {
                 checked = !checked
                 onCheckedChange(checked)
-            }
-        )
+            })
 
         Spacer(modifier = Modifier.width(117.dp))
         Text(
             text = "Forgot Password ?",
-            modifier = Modifier.clickable { },
+            modifier = Modifier.clickable { navHostController.navigate("verification") },
             style = TextStyle(color = Color(0xFF6C63FF), textAlign = TextAlign.Center)
         )
 
@@ -284,7 +277,8 @@ fun NextButton(
 ) {
 
     Button(
-        onClick = onClick, modifier = modifier
+        onClick = onClick,
+        modifier = modifier
             .width(300.dp)
             .height(50.dp),
         shape = RoundedCornerShape(10.dp),
@@ -293,12 +287,8 @@ fun NextButton(
     ) {
         Row {
             Text(
-                text = label,
-                color = Color.White,
-                style = TextStyle(
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    textAlign = TextAlign.Center
+                text = label, color = Color.White, style = TextStyle(
+                    fontSize = 20.sp, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center
                 )
             )
             Spacer(modifier = Modifier.width(11.dp))
