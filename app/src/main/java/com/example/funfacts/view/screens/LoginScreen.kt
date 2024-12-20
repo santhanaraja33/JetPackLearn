@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,6 +18,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -33,6 +36,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -143,6 +148,25 @@ fun LoginScreen(navHostController: NavHostController) {
                     .padding(start = 20.dp)
             ) {
                 CustomCheckBoxWithLabel()
+                Spacer(modifier = Modifier.height(176.dp))
+            }
+            NextButton(label = "Next")
+            Box(modifier = Modifier.size(23.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(16.dp)
+                    .align(Alignment.CenterHorizontally),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(text = "New Member? ")
+                Text(
+                    text = "Register now",
+                    color = Color(0xFF6C63FF),
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.clickable { navHostController.navigate("register") }
+                )
             }
 
         }
@@ -163,16 +187,15 @@ fun CustomTextFieldWithTrailingIcon(
     trailingIcon: @Composable (() -> Unit)? = null
 ) {
     Box(
-        modifier = modifier
-            .background(color = backgroundColor, shape = RoundedCornerShape(cornerRadius))
+        modifier = modifier.background(
+            color = backgroundColor, shape = RoundedCornerShape(cornerRadius)
+        )
     ) {
         Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
+            verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()
         ) {
             // BasicTextField with hint and text
-            BasicTextField(
-                value = value,
+            BasicTextField(value = value,
                 onValueChange = onValueChange,
                 textStyle = textStyle,
                 singleLine = true,
@@ -182,8 +205,7 @@ fun CustomTextFieldWithTrailingIcon(
                         Text(text = hint, style = hintStyle)
                     }
                     innerTextField() // Actual text field
-                }
-            )
+                })
             // Add trailing icon if provided
             if (trailingIcon != null) {
                 trailingIcon()
@@ -205,16 +227,17 @@ fun CustomCheckBoxWithLabel(
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
-            .clickable {
-                checked = !checked
-                onCheckedChange(checked)
-            }
+            .padding(start = 10.dp)
     ) {
         Box(
             modifier = Modifier
-                .size(24.dp)
-                .border(1.dp, Color.Gray, RoundedCornerShape(4.dp)) // Outline
+                .size(12.dp)
+                .border(1.dp, Color(0xFFCBCBCB), RoundedCornerShape(3.dp)) // Outline
                 .clip(RoundedCornerShape(4.dp))
+                .clickable {
+                    checked = !checked
+                    onCheckedChange(checked)
+                }
                 .background(if (checked) MaterialTheme.colorScheme.primary else Color.Transparent)
         ) {
             if (checked) {
@@ -234,9 +257,65 @@ fun CustomCheckBoxWithLabel(
         Text(
             text = label,
             color = Color.Black,
-            style = MaterialTheme.typography.bodyMedium
+            style = MaterialTheme.typography.bodyMedium,
+            modifier = Modifier.clickable {
+                checked = !checked
+                onCheckedChange(checked)
+            }
         )
+
+        Spacer(modifier = Modifier.width(117.dp))
+        Text(
+            text = "Forgot Password ?",
+            modifier = Modifier.clickable { },
+            style = TextStyle(color = Color(0xFF6C63FF), textAlign = TextAlign.Center)
+        )
+
     }
+}
+
+
+@Composable
+fun NextButton(
+    label: String = "Next",
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
+    icon: Int = R.drawable.baseline_keyboard_arrow_right_24
+) {
+
+    Button(
+        onClick = onClick, modifier = modifier
+            .width(300.dp)
+            .height(50.dp),
+        shape = RoundedCornerShape(10.dp),
+        colors = ButtonDefaults.buttonColors(Color(0xFF6C63FF))
+
+    ) {
+        Row {
+            Text(
+                text = label,
+                color = Color.White,
+                style = TextStyle(
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    textAlign = TextAlign.Center
+                )
+            )
+            Spacer(modifier = Modifier.width(11.dp))
+            Icon(
+                painter = painterResource(id = R.drawable.arrow),
+                contentDescription = "Checked",
+                tint = Color.White,
+                modifier = Modifier
+                    .size(width = 6.dp, height = 12.dp)
+                    .align(Alignment.CenterVertically)// Adjust icon size
+            )
+
+        }
+
+
+    }
+
 }
 
 
