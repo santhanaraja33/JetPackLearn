@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Text
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -37,6 +38,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -87,7 +89,7 @@ fun LoginScreen(navHostController: NavHostController) {
                 CustomTextFieldWithTrailingIcon(
                     value = email,
                     onValueChange = { email = it },
-                    hint = "Enter your name",
+                    hint = "Enter your email",
                     textStyle = TextStyle(color = Color.Black, fontSize = 16.sp),
                     hintStyle = TextStyle(color = Color.Gray, fontSize = 16.sp),
                     backgroundColor = Color.White,
@@ -99,7 +101,7 @@ fun LoginScreen(navHostController: NavHostController) {
                             tint = Color.Gray,
                             modifier = Modifier.size(24.dp) // Icon size
                         )
-                    },
+                    }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
@@ -132,7 +134,7 @@ fun LoginScreen(navHostController: NavHostController) {
                             tint = Color.Gray,
                             modifier = Modifier.size(24.dp) // Icon size
                         )
-                    },
+                    }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
@@ -182,7 +184,8 @@ fun CustomTextFieldWithTrailingIcon(
     hintStyle: TextStyle = TextStyle(color = Color.Gray, fontSize = 16.sp),
     backgroundColor: Color = Color(0xFFF5F5F5),
     cornerRadius: Dp = 8.dp,
-    trailingIcon: @Composable (() -> Unit)? = null
+    trailingIcon: @Composable (() -> Unit)? = null,
+    keyboardOptions: KeyboardOptions
 ) {
     Box(
         modifier = modifier.background(
@@ -193,7 +196,8 @@ fun CustomTextFieldWithTrailingIcon(
             verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()
         ) {
             // BasicTextField with hint and text
-            BasicTextField(value = value,
+            BasicTextField(
+                value = value,
                 onValueChange = onValueChange,
                 textStyle = textStyle,
                 singleLine = true,
@@ -203,7 +207,8 @@ fun CustomTextFieldWithTrailingIcon(
                         Text(text = hint, style = hintStyle)
                     }
                     innerTextField() // Actual text field
-                })
+                }, keyboardOptions = keyboardOptions
+            )
             // Add trailing icon if provided
             if (trailingIcon != null) {
                 trailingIcon()
