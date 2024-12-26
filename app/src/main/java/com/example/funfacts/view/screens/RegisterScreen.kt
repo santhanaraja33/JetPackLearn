@@ -75,7 +75,6 @@ fun RegisterScreen(navHostController: NavHostController) {
             //Name Box
             Box(
                 modifier = Modifier
-                    .background(color = Color(0xFFC4C4C4).copy(alpha = .2f))
                     .height(50.dp)
                     .align(Alignment.CenterHorizontally)
                     .padding(horizontal = 30.dp),
@@ -110,7 +109,6 @@ fun RegisterScreen(navHostController: NavHostController) {
             //Email Box
             Box(
                 modifier = Modifier
-                    .background(color = Color(0xFFC4C4C4).copy(alpha = .2f))
                     .height(50.dp)
                     .align(Alignment.CenterHorizontally)
                     .padding(horizontal = 30.dp),
@@ -143,7 +141,6 @@ fun RegisterScreen(navHostController: NavHostController) {
             //Phone Number Box
             Box(
                 modifier = Modifier
-                    .background(color = Color(0xFFC4C4C4).copy(alpha = .2f))
                     .height(50.dp)
                     .align(Alignment.CenterHorizontally)
                     .padding(horizontal = 30.dp),
@@ -176,7 +173,6 @@ fun RegisterScreen(navHostController: NavHostController) {
             //Password Box
             Box(
                 modifier = Modifier
-                    .background(color = Color(0xFFC4C4C4).copy(alpha = .2f))
                     .height(50.dp)
                     .align(Alignment.CenterHorizontally)
                     .padding(horizontal = 30.dp),
@@ -215,7 +211,7 @@ fun RegisterScreen(navHostController: NavHostController) {
                 CustomCheckBoxWithContent()
                 Spacer(modifier = Modifier.height(126.dp))
             }
-            NextButton1(label = "Next")
+            NextButton1(label = "Next", onClick = { navHostController.navigate("verification") })
             Box(modifier = Modifier.size(23.dp))
             Row(
                 modifier = Modifier
@@ -246,7 +242,7 @@ fun CustomText1FieldWithTrailingIcon(
     modifier: Modifier = Modifier,
     textStyle: TextStyle = TextStyle(color = Color.Black, fontSize = 16.sp),
     hintStyle: TextStyle = TextStyle(color = Color.Gray, fontSize = 16.sp),
-    backgroundColor: Color = Color(0xFFF5F5F5),
+    backgroundColor: Color = Color(0xFFE0E0E0), // Updated default color
     cornerRadius: Dp = 8.dp,
     trailingIcon: @Composable (() -> Unit)? = null,
     keyboardOptions: KeyboardOptions
@@ -257,7 +253,10 @@ fun CustomText1FieldWithTrailingIcon(
         )
     ) {
         Row(
-            verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(color = backgroundColor)
         ) {
             // BasicTextField with hint and text
             BasicTextField(
@@ -265,17 +264,38 @@ fun CustomText1FieldWithTrailingIcon(
                 onValueChange = onValueChange,
                 textStyle = textStyle,
                 singleLine = true,
-                modifier = Modifier.weight(1f), // TextField takes up available space
+                modifier = Modifier
+                    .weight(1f)
+                    .background(backgroundColor), // TextField takes up available space
                 decorationBox = { innerTextField ->
-                    if (value.isEmpty()) {
-                        Text(text = hint, style = hintStyle)
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(backgroundColor) // Set the container color
+                            .padding(start = 8.dp) // Optional padding
+                    ) {
+                        if (value.isEmpty()) {
+                            Text(
+                                text = hint,
+                                style = hintStyle,
+                                modifier = Modifier
+                                    .background(backgroundColor) // Placeholder background color
+                            )
+                        }
+                        innerTextField() // Actual text field
                     }
-                    innerTextField() // Actual text field
-                }, keyboardOptions = keyboardOptions
+                },
+                keyboardOptions = keyboardOptions
             )
             // Add trailing icon if provided
             if (trailingIcon != null) {
-                trailingIcon()
+                Box(
+                    modifier = Modifier
+                        .background(backgroundColor) // Icon background color
+                        .padding(end = 8.dp) // Optional padding
+                ) {
+                    trailingIcon()
+                }
             }
         }
     }

@@ -80,7 +80,6 @@ fun LoginScreen(navHostController: NavHostController) {
             //Email Box
             Box(
                 modifier = Modifier
-                    .background(color = Color(0xFFC4C4C4).copy(alpha = .2f))
                     .height(50.dp)
                     .align(Alignment.CenterHorizontally)
                     .padding(horizontal = 30.dp),
@@ -101,7 +100,8 @@ fun LoginScreen(navHostController: NavHostController) {
                             tint = Color.Gray,
                             modifier = Modifier.size(24.dp) // Icon size
                         )
-                    }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                    },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
@@ -113,7 +113,6 @@ fun LoginScreen(navHostController: NavHostController) {
             //Password Box
             Box(
                 modifier = Modifier
-                    .background(color = Color(0xFFC4C4C4).copy(alpha = .2f))
                     .height(50.dp)
                     .align(Alignment.CenterHorizontally)
                     .padding(horizontal = 30.dp),
@@ -134,7 +133,8 @@ fun LoginScreen(navHostController: NavHostController) {
                             tint = Color.Gray,
                             modifier = Modifier.size(24.dp) // Icon size
                         )
-                    }, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                    },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(16.dp)
@@ -182,7 +182,7 @@ fun CustomTextFieldWithTrailingIcon(
     modifier: Modifier = Modifier,
     textStyle: TextStyle = TextStyle(color = Color.Black, fontSize = 16.sp),
     hintStyle: TextStyle = TextStyle(color = Color.Gray, fontSize = 16.sp),
-    backgroundColor: Color = Color(0xFFF5F5F5),
+    backgroundColor: Color = Color(0xFFE0E0E0), // Updated default color
     cornerRadius: Dp = 8.dp,
     trailingIcon: @Composable (() -> Unit)? = null,
     keyboardOptions: KeyboardOptions
@@ -193,7 +193,10 @@ fun CustomTextFieldWithTrailingIcon(
         )
     ) {
         Row(
-            verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(color = backgroundColor)
         ) {
             // BasicTextField with hint and text
             BasicTextField(
@@ -201,21 +204,44 @@ fun CustomTextFieldWithTrailingIcon(
                 onValueChange = onValueChange,
                 textStyle = textStyle,
                 singleLine = true,
-                modifier = Modifier.weight(1f), // TextField takes up available space
+                modifier = Modifier
+                    .weight(1f)
+                    .background(backgroundColor), // TextField takes up available space
                 decorationBox = { innerTextField ->
-                    if (value.isEmpty()) {
-                        Text(text = hint, style = hintStyle)
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .background(backgroundColor) // Set the container color
+                            .padding(start = 8.dp) // Optional padding
+                    ) {
+                        if (value.isEmpty()) {
+                            Text(
+                                text = hint,
+                                style = hintStyle,
+                                modifier = Modifier
+                                    .background(backgroundColor) // Placeholder background color
+                            )
+                        }
+                        innerTextField() // Actual text field
                     }
-                    innerTextField() // Actual text field
-                }, keyboardOptions = keyboardOptions
+                },
+                keyboardOptions = keyboardOptions
             )
             // Add trailing icon if provided
             if (trailingIcon != null) {
-                trailingIcon()
+                Box(
+                    modifier = Modifier
+                        .background(backgroundColor) // Icon background color
+                        .padding(end = 8.dp) // Optional padding
+                ) {
+                    trailingIcon()
+                }
             }
         }
     }
 }
+
+
 
 
 @Composable
@@ -265,7 +291,7 @@ fun CustomCheckBoxWithLabel(
         Spacer(modifier = Modifier.width(117.dp))
         Text(
             text = "Forgot Password ?",
-            modifier = Modifier.clickable { navHostController.navigate("verification") },
+            modifier = Modifier.clickable { /*navHostController.navigate("verification")*/ },
             style = TextStyle(color = Color(0xFF6C63FF), textAlign = TextAlign.Center)
         )
 

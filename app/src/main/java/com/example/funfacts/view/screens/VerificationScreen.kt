@@ -115,7 +115,9 @@ fun VerificationScreen(navController: NavHostController) {
                         contentAlignment = Alignment.Center
                     ) {
 
-                        VerifyButton(label = "Verify")
+                        VerifyButton(
+                            label = "Verify",
+                            onClick = { navController.navigate("welcome") })
                     }
 
                     Spacer(modifier = Modifier.height(62.dp))
@@ -185,11 +187,9 @@ fun VerificationScreen(navController: NavHostController) {
 
                         RoundButtonWithContent(
                             buttonSize = 60.dp,
-                            painter = painterResource(id = R.drawable.left_arrow)
-                        ) {
-
-                        }
-
+                            painter = painterResource(id = R.drawable.left_arrow),
+                            onClick = { navController.navigate("register") }
+                        )
                     }
                 }
             }
